@@ -1,34 +1,50 @@
 /**
- *this class represents the entry point of the Palindrome Checker Management App .
- *At this stage the application starts execution for the main() method
- *,displays a welcome message and shows application version
- *No palindrome logic is implemented yet
- *the goal is to establish a clear startup flow.
- *@author Renisha
- *@version 1.0
+ * MAIN CLASS - PalindromeCheckerApp
+ *
+ * Use Case 3: Reverse String Based Palindrome Check
+ *
+ * Description:
+ * This class checks whether a string is a palindrome
+ * by reversing the string and comparing it with
+ * the original value.
+ *
+ * At this stage, the application:
+ * - Iterates the string in reverse order
+ * - Builds a reversed version
+ * - Compares original and reversed strings
+ * - Displays the validation result
+ *
+ * This introduces transformation-based validation.
+ *
+ * @author Renisha Rana
+ * @version 3.0
  */
 
-public class PalindromeCheckerApp{
-    public static void main(String[] args){
-        System.out.println("Welcome to the Palindrome Checker Management System \nVersion : 1.0 \nSystem initialized successfully");
-        String input="madam";
+public class PalindromeCheckerApp {
 
-        /**This class demonstrates basic palindrome validation using a hardcoded string value
-         * at this stage the application;
-         * stores a predefined string and checks if it is palindrome and then displays the result
-         * UC2 introduces fundamental comparison logic before using advanced data structures.
-         * @author Renisha
-         * @version 1.1
-         */
-        System.out.println("Input text: madam");
-        System.out.print("Is it a palindrome?:");
-        for(int i=0;i<input.length()/2;i++){
-            if(input.charAt(i)!=input.charAt(input.length()-i-1)) {
-                System.out.print(" false");
-            }else{
-                System.out.print(" True");
-                break;
-            }
+    /**
+     * Application entry point for UC3.
+     * @param args Command-line arguments
+     */
+    public static void main(String[] args) {
+
+        // Hardcoded input
+        String input = "madam";
+
+        // Variable to store reversed string
+        String reversed = "";
+
+        // Iterate from last character to first
+        for (int i = input.length() - 1; i >= 0; i--) {
+            reversed = reversed + input.charAt(i);
         }
+
+        // Compare original and reversed string
+        boolean isPalindrome = input.equals(reversed);
+
+        // Output result
+        System.out.println("Input text: " + input);
+        System.out.println("Reversed text: " + reversed);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
     }
 }
