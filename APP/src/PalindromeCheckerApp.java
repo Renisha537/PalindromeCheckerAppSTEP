@@ -1,61 +1,84 @@
-import java.util.LinkedList;
-
 /**
  *
  * MAIN CLASS - PalindromeCheckerApp
  *
- * Use Case 8: Linked List Based Palindrome Checker
+ * Use Case 12: Strategy Pattern for Palindrome Algorithms
  *
  * Description:
- * This class checks whether a string is a palindrome
- * using a LinkedList.
+ * This class demonstrates how different palindrome
+ * validation algorithms can be selected dynamically
+ * at runtime using the Strategy Design Pattern.
  *
- * Characters are added to the list and then compared
- * by removing elements from both ends:
- * - removeFirst()
- * - removeLast()
+ * At this stage, the application:
+ * - Defines a common PalindromeStrategy interface
+ * - Implements a concrete Stack-based strategy
+ * - Injects the strategy at runtime
+ * - Executes the selected algorithm
  *
- * This demonstrates how LinkedList supports
- * double-ended operations for symmetric validation.
+ * No performance comparison is done in this use case.
+ * The focus is purely on algorithm interchangeability.
  *
  * @author Renisha Rana
-
- * @version 8.0
+ *
+ * @version 12.0
  */
 
 public class PalindromeCheckerApp {
 
-    /**
-     * Application entry point for UC8.
-     *
-     * @param args Command-line arguments
-     */
     public static void main(String[] args) {
 
-        // Define the input string
-        String input = "level";
+        String input = "Level";
 
-        // Create a LinkedList to store characters
-        LinkedList<Character> list = new LinkedList<>();
+        // Strategy injection
+        PalindromeStrategy strategy = new StackStrategy();
 
-        // Add each character to the linked list
+        // Execute selected strategy
+        boolean result = strategy.check(input.toLowerCase());
+
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + result);
+    }
+}
+
+/**
+ * INTERFACE - PalindromeStrategy
+ *
+ * This interface defines a contract for all
+ * palindrome checking algorithms.
+ */
+interface PalindromeStrategy {
+
+    boolean check(String input);
+}
+
+/**
+ * CLASS - StackStrategy
+ *
+ * This class provides a Stack-based implementation
+ * of the PalindromeStrategy interface.
+ *
+ * It uses LIFO behavior to reverse characters
+ * and compare them with the original sequence.
+ */
+class StackStrategy implements PalindromeStrategy {
+
+    @Override
+    public boolean check(String input) {
+
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+
+        // Push each character onto the stack
         for (char c : input.toCharArray()) {
-            list.add(c);
+            stack.push(c);
         }
 
-        // Flag to track palindrome state
-        boolean isPalindrome = true;
-
-        // Compare until only one or zero elements remain
-        while (list.size() > 1) {
-            if (!list.removeFirst().equals(list.removeLast())) {
-                isPalindrome = false;
-                break;
+        // Compare by popping from stack
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
             }
         }
 
-        // Display result
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        return true;
     }
 }
